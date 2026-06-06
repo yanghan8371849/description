@@ -9,12 +9,15 @@ function isLocalhost() {
 async function getCurrentUser() {
   const { data, error } = await supabase.auth.getUser();
   if (error) {
-    if (DEV_USER_ID && isLocalhost()) {
+    if (DEV_USER_ID && isLocalhost() && isValidUuid(DEV_USER_ID)) {
       console.warn('Using local dev user fallback because auth session is missing.');
       return {
         id: DEV_USER_ID,
         email: 'dev@localhost',
       };
+    }
+    if (DEV_USER_ID && isLocalhost()) {
+      console.warn('DEV_USER_ID is set but invalid. Please provide a valid UUID for local dev fallback.');
     }
     console.error('获取当前用户失败', error);
     return null;
@@ -22,12 +25,56 @@ async function getCurrentUser() {
   return data?.user || null;
 }
 
+const WORD_DEFINITION_FIELD = 'definition';
+const FALLBACK_DEFINITION_FIELDS = ['definition', 'meaning', 'description', 'content', 'def', 'explanation'];
+
+function isMissingFieldError(error) {
+  if (!error || !error.message) return false;
+  return /Could not find the '.+' column of 'words' in the schema cache|column .* does not exist/i.test(error.message);
+}
+
+function isValidUuid(uuid) {
+  return /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(uuid);
+}
+
 async function addWord(word, definition, example, userId) {
-  const { data, error } = await supabase
-    .from('words')
-    .insert([{ word, definition, example, user_id: userId }]);
-  if (error) throw error;
-  return data;
+  const definitionFields = ['definition', 'meaning', 'description', 'content', 'def', 'explanation'];
+  const exampleFields = ['example', 'sentence', 'usage', 'note', 'remark'];
+  const basePayload = { word };
+  if (userId) basePayload.user_id = userId;
+
+  const tryInsert = async (payload) => {
+    return await supabase.from('words').insert([payload]);
+  };
+
+  const payloadCandidates = [];
+  if (definition) {
+    for (const defField of definitionFields) {
+      if (example) {
+        for (const exampleField of exampleFields) {
+          payloadCandidates.push({ ...basePayload, [defField]: definition, [exampleField]: example });
+        }
+      }
+      payloadCandidates.push({ ...basePayload, [defField]: definition });
+    }
+  }
+  if (example) {
+    for (const exampleField of exampleFields) {
+      payloadCandidates.push({ ...basePayload, [exampleField]: example });
+    }
+  }
+  payloadCandidates.push({ ...basePayload });
+
+  let lastError = null;
+  for (const payload of payloadCandidates) {
+    const result = await tryInsert(payload);
+    if (!result.error) return result.data;
+    lastError = result.error;
+    if (!isMissingFieldError(result.error)) break;
+  }
+
+  if (lastError) throw lastError;
+  return [];
 }
 
 async function queryWords(q) {
@@ -40,6 +87,10 @@ async function queryWords(q) {
   return data || [];
 }
 
+function getDefinitionFromRecord(item) {
+  return item[WORD_DEFINITION_FIELD] || item.definition || item.meaning || item.description || item.content || item.def || '';
+}
+
 function renderCards(list, root) {
   root.innerHTML = '';
   if (!list.length) {
@@ -47,12 +98,13 @@ function renderCards(list, root) {
     return;
   }
   list.forEach(item => {
+    const definition = getDefinitionFromRecord(item);
     const card = document.createElement('div');
     card.className = 'bg-white rounded-xl shadow-lg p-6';
     card.innerHTML = `
       <div class="text-center">
         <h4 class="text-3xl font-bold text-blue-600 mb-3">${item.word}</h4>
-        <p class="text-gray-600 mb-4">${item.definition || ''}</p>
+        <p class="text-gray-600 mb-4">${definition}</p>
         <div class="bg-gray-100 rounded-lg p-3">${item.example || ''}</div>
       </div>
     `;
