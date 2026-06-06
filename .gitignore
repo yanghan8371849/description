@@ -22,3 +22,6 @@ Thumbs.db
 # Build
 dist/
 build/
+
+# Local frontend config (contains keys)
+assets/js/config.js

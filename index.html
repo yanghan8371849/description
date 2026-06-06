@@ -32,10 +32,10 @@
 <section class="lg:col-span-1">
 <div class="bg-white rounded-xl shadow p-6">
 <h3 class="text-xl font-bold mb-4">➕ 添加新单词</h3>
-<form class="space-y-4">
-<input type="text" placeholder="英文单词" class="w-full border rounded-lg px-4 py-2">
-<input type="text" placeholder="中文释义" class="w-full border rounded-lg px-4 py-2">
-<textarea rows="3" placeholder="输入例句..." class="w-full border rounded-lg px-4 py-2"></textarea>
+<form id="add-word-form" class="space-y-4">
+<input id="word-input" type="text" placeholder="英文单词" class="w-full border rounded-lg px-4 py-2">
+<input id="def-input" type="text" placeholder="中文释义" class="w-full border rounded-lg px-4 py-2">
+<textarea id="example-input" rows="3" placeholder="输入例句..." class="w-full border rounded-lg px-4 py-2"></textarea>
 <button class="w-full bg-blue-600 text-white py-3 rounded-lg">保存单词</button>
 </form>
 </div>
@@ -43,6 +43,12 @@
 
 <section class="lg:col-span-2">
 <h3 class="text-2xl font-bold mb-4">🧠 学习卡片</h3>
+
+<div class="mb-6 flex gap-3 items-center">
+	<input id="search-input" type="text" placeholder="搜索单词" class="border rounded-lg px-4 py-2 w-72">
+	<button id="search-button" class="bg-blue-600 text-white px-4 py-2 rounded-lg">查询</button>
+	<div id="search-results" class="flex-1 grid grid-cols-1 md:grid-cols-2 gap-6"></div>
+</div>
 
 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
@@ -67,5 +73,7 @@
 
 </div>
 </main>
+
+<script type="module" src="./assets/js/app.js"></script>
 </body>
 </html>
