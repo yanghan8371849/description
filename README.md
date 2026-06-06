@@ -20,7 +20,8 @@
 
 6. AI 释义生成：如果“释义”为空，前端会自动调用后端代理接口生成中文释义，并将生成结果写入数据库。同时也提供“自动生成释义”按钮。
 
-7. 后端代理配置：请复制 `.env.example` 为 `.env`，并填入 `OPENAI_API_KEY`。
+7. 后端代理配置：请复制 `.env.example` 为 `.env`，并填入 `AI_API_URL`、`AI_API_KEY` 和可选的 `AI_MODEL`。
+   - 如果你使用 Deepseek，请确保 `AI_API_KEY` 是 Deepseek 提供的 Key，通常不是 OpenAI 的 `sk-...` Key。
 
 8. 启动后端服务器：
 
@@ -29,6 +30,8 @@ npm install
 npm start
 ```
 
-9. 若你要部署到服务器，后端会在同域下提供代理接口 `/api/generate-definition`，前端无需暴露 AI key。
+9. 访问页面时请通过服务器地址打开（例如 `http://localhost:3001/index.html`），不要直接通过 `file://` 打开文件，否则前端无法正确定位代理接口。
 
-10. 若需帮助创建 Supabase 表或为 `words` 配置权限策略，我可以继续帮你完成。
+10. 若你要部署到服务器，后端会在同域下提供代理接口 `/api/generate-definition`，前端无需暴露 AI key。
+
+11. 若需帮助创建 Supabase 表或为 `words` 配置权限策略，我可以继续帮你完成。

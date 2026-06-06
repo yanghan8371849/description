@@ -1,9 +1,21 @@
 import { supabase } from './supabaseClient.js';
 import { generateChineseDefinition } from './aiService.js';
+import { DEV_USER_ID } from './config.js';
+
+function isLocalhost() {
+  return window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+}
 
 async function getCurrentUser() {
   const { data, error } = await supabase.auth.getUser();
   if (error) {
+    if (DEV_USER_ID && isLocalhost()) {
+      console.warn('Using local dev user fallback because auth session is missing.');
+      return {
+        id: DEV_USER_ID,
+        email: 'dev@localhost',
+      };
+    }
     console.error('获取当前用户失败', error);
     return null;
   }

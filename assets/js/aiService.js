@@ -1,7 +1,12 @@
 export async function generateChineseDefinition(word) {
   if (!word) throw new Error('请输入单词');
 
-  const response = await fetch('/api/generate-definition', {
+  const baseUrl = window.location.protocol === 'file:'
+    ? 'http://localhost:3001'
+    : window.location.origin;
+  const apiUrl = `${baseUrl}/api/generate-definition`;
+
+  const response = await fetch(apiUrl, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -11,7 +16,8 @@ export async function generateChineseDefinition(word) {
 
   const result = await response.json();
   if (!response.ok) {
-    throw new Error(result.error || `AI 代理请求失败：${response.status}`);
+    const message = result?.error?.message || result?.error || `AI 代理请求失败：${response.status}`;
+    throw new Error(message);
   }
 
   if (!result.definition) {
