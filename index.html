@@ -29,7 +29,21 @@
 <main class="max-w-7xl mx-auto px-4 pb-12">
 <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
 
-<section class="lg:col-span-1">
+<section class="lg:col-span-1 space-y-6">
+<div class="bg-white rounded-xl shadow p-6">
+<h3 class="text-xl font-bold mb-4">🔐 用户登录</h3>
+<form id="auth-form" class="space-y-4">
+<input id="auth-email" type="email" placeholder="邮箱" class="w-full border rounded-lg px-4 py-2">
+<input id="auth-password" type="password" placeholder="密码" class="w-full border rounded-lg px-4 py-2">
+<div class="flex gap-3">
+<button id="sign-in-button" type="button" class="flex-1 bg-blue-600 text-white px-4 py-3 rounded-lg">登录</button>
+<button id="sign-up-button" type="button" class="flex-1 bg-gray-200 text-gray-800 px-4 py-3 rounded-lg">注册</button>
+</div>
+</form>
+<div id="user-status" class="text-sm text-gray-600"></div>
+<button id="sign-out-button" type="button" class="hidden mt-4 w-full bg-red-500 text-white px-4 py-3 rounded-lg">登出</button>
+</div>
+
 <div class="bg-white rounded-xl shadow p-6">
 <h3 class="text-xl font-bold mb-4">➕ 添加新单词</h3>
 <form id="add-word-form" class="space-y-4">
