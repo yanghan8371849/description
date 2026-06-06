@@ -25,3 +25,6 @@ build/
 
 # Local frontend config (contains keys)
 assets/js/config.js
+
+# Local backend config
+.env

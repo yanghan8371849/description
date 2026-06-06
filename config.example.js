@@ -3,5 +3,6 @@
 export const SUPABASE_URL = 'https://your-project-ref.supabase.co';
 export const SUPABASE_ANON_KEY = 'your-anon-key-here';
 
-// 后端代理接口地址（与前端同域）
-export const AI_PROXY_PATH = '/api/generate-definition';
+// AI 接口配置：前端调用 AI 接口生成中文释义
+export const AI_API_URL = 'https://api.openai.com/v1/chat/completions';
+export const AI_API_KEY = 'your-openai-api-key';

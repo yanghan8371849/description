@@ -1,0 +1,3 @@
+# Copy this file to .env and fill in your OpenAI API key.
+OPENAI_API_KEY=sk-60b41c2c62f248648aa6ecfb42591117
+PORT=3000

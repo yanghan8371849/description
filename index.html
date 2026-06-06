@@ -50,7 +50,10 @@
 <input id="word-input" type="text" placeholder="英文单词" class="w-full border rounded-lg px-4 py-2">
 <input id="def-input" type="text" placeholder="中文释义" class="w-full border rounded-lg px-4 py-2">
 <textarea id="example-input" rows="3" placeholder="输入例句..." class="w-full border rounded-lg px-4 py-2"></textarea>
-<button class="w-full bg-blue-600 text-white py-3 rounded-lg">保存单词</button>
+<div class="flex gap-3">
+  <button id="generate-definition-button" type="button" class="flex-1 bg-green-600 text-white px-4 py-3 rounded-lg">自动生成释义</button>
+  <button class="flex-1 bg-blue-600 text-white py-3 rounded-lg">保存单词</button>
+</div>
 </form>
 </div>
 </section>

@@ -1,4 +1,5 @@
 import { supabase } from './supabaseClient.js';
+import { generateChineseDefinition } from './aiService.js';
 
 async function getCurrentUser() {
   const { data, error } = await supabase.auth.getUser();
@@ -150,16 +151,40 @@ document.addEventListener('DOMContentLoaded', () => {
       const user = await getCurrentUser();
       if (!user) return alert('请先登录');
       const word = wordInput.value.trim();
-      const definition = defInput.value.trim();
+      let definition = defInput.value.trim();
       const example = exampleInput.value.trim();
       if (!word) return alert('请输入英文单词');
       try {
+        if (!definition) {
+          definition = await generateChineseDefinition(word);
+          defInput.value = definition;
+        }
         await addWord(word, definition, example, user.id);
         alert('已保存');
         form.reset();
       } catch (err) {
         console.error(err);
         alert('保存失败：' + (err.message || JSON.stringify(err)));
+      }
+    });
+  }
+
+  const generateDefinitionBtn = document.getElementById('generate-definition-button');
+  if (generateDefinitionBtn) {
+    generateDefinitionBtn.addEventListener('click', async () => {
+      const word = wordInput.value.trim();
+      if (!word) return alert('请输入英文单词以生成释义');
+      generateDefinitionBtn.textContent = '生成中...';
+      generateDefinitionBtn.disabled = true;
+      try {
+        const generated = await generateChineseDefinition(word);
+        defInput.value = generated;
+      } catch (err) {
+        console.error(err);
+        alert('生成释义失败：' + (err.message || JSON.stringify(err)));
+      } finally {
+        generateDefinitionBtn.textContent = '自动生成释义';
+        generateDefinitionBtn.disabled = false;
       }
     });
   }
