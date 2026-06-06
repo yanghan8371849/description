@@ -263,3 +263,8 @@ Developed using:
 * Supabase
 * Vercel
 * Visual Studio Code
+<img width="1920" height="1080" alt="Desktop Screenshot 2026 06 06 - 15 05 33 98" src="https://github.com/user-attachments/assets/78225727-369a-487a-9bba-aff70ebaeabd" />
+<img width="1920" height="1080" alt="Desktop Screenshot 2026 06 06 - 15 03 03 48" src="https://github.com/user-attachments/assets/e7ee3ec4-6bdb-4bd4-81cc-3106409b0252" />
+<img width="1920" height="1080" alt="Desktop Screenshot 2026 06 06 - 17 10 07 67" src="https://github.com/user-attachments/assets/dbef3f5c-37b9-42a8-a72b-74259fcd837c" />
+
+
