@@ -1,37 +1,265 @@
-# description
+# AI Vocabulary Learning Web App
 
-## Supabase 前端配置与使用
+## Project Overview
 
-1. 在 Supabase 控制台中创建表 `words`，字段示例：
-	- `id` (主键, e.g. uuid 或 int)
-	- `word` (text)
-	- `definition` (text)
-	- `example` (text)
+The AI Vocabulary Learning Web App is a web-based English vocabulary learning tool developed with the assistance of Generative AI technologies. Users can input English words, automatically generate Chinese meanings through AI, and store the vocabulary data in a cloud database for future review and learning.
 
-2. 复制 `assets/js/config.example.js` 为 `assets/js/config.js`，并将 `SUPABASE_URL` 与 `SUPABASE_ANON_KEY` 填入其中。
+The application is responsive and supports both desktop and mobile devices. It is deployed online using Vercel and can be accessed through a web browser.
 
-3. 安全注意：客户端只能使用 Supabase 的 ANON（public）key，切勿在前端暴露 `service_role` key。`assets/js/config.js` 已被加入 `.gitignore`，请不要提交真实密钥。
+---
 
-4. 运行：在浏览器中打开 `index.html`，页面会加载 `./assets/js/app.js`，可以在页面中登录/注册、新增单词或使用“查询”功能检索。
+# Features
 
-5. 当前 RLS 策略要求新增单词时带上当前用户 ID。页面中已经集成登录和注册功能：
-   - 登录后才能新增单词
-   - 查询单词为公开功能
+### 1. Word Input
 
-6. AI 释义生成：如果“释义”为空，前端会自动调用后端代理接口生成中文释义，并将生成结果写入数据库。同时也提供“自动生成释义”按钮。
+* Manually enter English words.
+* Save words to the cloud database.
 
-7. 后端代理配置：请复制 `.env.example` 为 `.env`，并填入 `AI_API_URL`、`AI_API_KEY` 和可选的 `AI_MODEL`。
-   - 如果你使用 Deepseek，请确保 `AI_API_KEY` 是 Deepseek 提供的 Key，通常不是 OpenAI 的 `sk-...` Key。
+### 2. AI-Powered Meaning Generation
 
-8. 启动后端服务器：
+* Automatically generate Chinese meanings using the DeepSeek AI API.
+* Save generated meanings to the database.
+
+### 3. Vocabulary History Management
+
+* Browse previously saved vocabulary.
+* View words and their corresponding meanings.
+* Build a personal vocabulary database.
+
+### 4. Responsive Design
+
+* Supports desktop, tablet, and mobile devices.
+* Optimized user experience across different screen sizes.
+
+---
+
+# AI Tools Used
+
+## ChatGPT
+
+Used for:
+
+* Project planning and design
+* Code generation
+* Logic optimization
+* Debugging assistance
+* Documentation writing
+
+## DeepSeek AI API
+
+Used for:
+
+* Automatic Chinese meaning generation
+* Natural language understanding
+
+## Visual Studio Code
+
+Used for:
+
+* Development
+* Code editing and debugging
+
+---
+
+# Technology Stack
+
+## Frontend
+
+* HTML5
+* Tailwind CSS
+* JavaScript (ES6)
+
+## Backend Database
+
+* Supabase
+* PostgreSQL Cloud Database
+
+## AI Service
+
+* DeepSeek API
+
+## Deployment
+
+* Vercel
+
+---
+
+# System Architecture
+
+User Browser
+
+↓
+
+Frontend (HTML + Tailwind CSS + JavaScript)
+
+↓
+
+DeepSeek AI API
+
+↓
+
+Supabase Database
+
+↓
+
+Cloud Storage & Retrieval
+
+---
+
+# Database Schema
+
+## Table: words
+
+| Column     | Type      | Description     |
+| ---------- | --------- | --------------- |
+| id         | bigint    | Primary Key     |
+| word       | text      | English Word    |
+| meaning    | text      | Chinese Meaning |
+| created_at | timestamp | Creation Time   |
+
+---
+
+# Installation and Local Setup
+
+## Prerequisites
+
+* Modern web browser
+* Supabase account
+* DeepSeek API key
+* Vercel account (optional)
+
+---
+
+## Clone the Project
 
 ```bash
-npm install
-npm start
+git clone https://github.com/your-username/ai-vocabulary-app.git
+
+cd ai-vocabulary-app
 ```
 
-9. 访问页面时请通过服务器地址打开（例如 `http://localhost:3001/index.html`），不要直接通过 `file://` 打开文件，否则前端无法正确定位代理接口。
+## Configure Supabase
 
-10. 若你要部署到服务器，后端会在同域下提供代理接口 `/api/generate-definition`，前端无需暴露 AI key。
+Replace the following values in your JavaScript configuration:
 
-11. 若需帮助创建 Supabase 表或为 `words` 配置权限策略，我可以继续帮你完成。
+```javascript
+const SUPABASE_URL = "YOUR_SUPABASE_URL";
+const SUPABASE_ANON_KEY = "YOUR_SUPABASE_ANON_KEY";
+```
+
+## Configure DeepSeek API
+
+```javascript
+const API_KEY = "YOUR_DEEPSEEK_API_KEY";
+```
+
+## Run Locally
+
+Open the project folder and launch:
+
+```text
+index.html
+```
+
+Or use a local web server:
+
+```bash
+npx serve .
+```
+
+Then visit:
+
+```text
+http://localhost:3000
+```
+
+---
+
+# Online Deployment
+
+The project can be deployed on Vercel.
+
+### Deployment Steps
+
+1. Upload the project to GitHub.
+2. Import the repository into Vercel.
+3. Configure environment variables.
+4. Deploy automatically.
+
+Online URL:
+
+```text
+https://your-project.vercel.app
+```
+
+---
+
+# Screenshots
+
+## Home Page
+
+Insert screenshot here.
+
+## Word Input Function
+
+Insert screenshot here.
+
+## AI Meaning Generation
+
+Insert screenshot here.
+
+## Vocabulary History
+
+Insert screenshot here.
+
+## Mobile Responsive View
+
+Insert screenshot here.
+
+---
+
+# Project Highlights
+
+* AI-powered vocabulary explanation
+* Cloud database storage
+* Responsive web design
+* Serverless architecture
+* Easy deployment with Vercel
+* Modern frontend development workflow
+
+---
+
+# Future Improvements
+
+Potential future features include:
+
+* User authentication
+* Personal vocabulary categories
+* Favorites collection
+* Vocabulary quizzes
+* AI-generated example sentences
+* Text-to-Speech pronunciation
+* Learning progress tracking
+* Spaced repetition review system
+
+---
+
+# Conclusion
+
+This project demonstrates how Generative AI tools such as ChatGPT and DeepSeek can be integrated into modern web development workflows. By combining AI services, cloud databases, and serverless deployment platforms, the application provides a simple yet effective solution for English vocabulary learning.
+
+The project also highlights the practical value of AI-assisted programming in improving development efficiency, reducing implementation complexity, and accelerating the software development lifecycle.
+
+---
+
+## Author
+
+Student Project – AI-Assisted Web Development
+
+Developed using:
+
+* ChatGPT
+* DeepSeek AI
+* Supabase
+* Vercel
+* Visual Studio Code
