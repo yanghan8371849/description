@@ -2,6 +2,7 @@
   "name": "description-backend-proxy",
   "version": "1.0.0",
   "description": "Static frontend with a backend AI proxy for generating word definitions.",
+  "type": "module",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"

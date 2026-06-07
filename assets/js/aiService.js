@@ -1,10 +1,7 @@
 export async function generateChineseDefinition(word) {
   if (!word) throw new Error('请输入单词');
 
-  const baseUrl = window.location.protocol === 'file:'
-    ? 'http://localhost:3001'
-    : window.location.origin;
-  const apiUrl = `${baseUrl}/api/generate-definition`;
+  const apiUrl = '/api/generate-definition';
 
   const response = await fetch(apiUrl, {
     method: 'POST',
