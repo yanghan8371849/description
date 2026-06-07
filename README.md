@@ -21,7 +21,11 @@
 6. AI 释义生成：如果“释义”为空，前端会自动调用后端代理接口生成中文释义，并将生成结果写入数据库。同时也提供“自动生成释义”按钮。
 
 7. 后端代理配置：请复制 `.env.example` 为 `.env`，并填入 `AI_API_URL`、`AI_API_KEY` 和可选的 `AI_MODEL`。
-   - 如果你使用 Deepseek，请确保 `AI_API_KEY` 是 Deepseek 提供的 Key，通常不是 OpenAI 的 `sk-...` Key。
+   - 如果你使用 Deepseek，请把 `AI_API_URL` 设置为 `https://api.deepseek.com`（或直接写完整的 OpenAI 兼容路径 `https://api.deepseek.com/v1/chat/completions`），并把 `AI_MODEL` 设置为 `deepseek-v4-flash`。
+   - Deepseek OpenAI 兼容接口通常使用 `Authorization: Bearer <sk-...>` 风格 key。
+   - 后端代理同时支持 `AI_API_KEY` 和 `DEEPSEEK_API_KEY` 两种环境变量。
+   - 如果你使用 Google Gemini 2.0 Flash，请把 `AI_API_URL` 设置为对应的生成接口地址，例如 `https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent`，并把 `AI_MODEL` 设置为 `gemini-flash-latest` 或你的模型名。
+   - Gemini 生成接口支持 `X-goog-api-key` 风格的 Google API Key，也支持 `Authorization: Bearer <token>` 的 OAuth2 访问 Token。
 
 8. 启动后端服务器：
 

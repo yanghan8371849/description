@@ -1,5 +1,6 @@
 import { supabase } from './supabaseClient.js';
 import { generateChineseDefinition } from './aiService.js';
+import { getWordMeaning, updateStatsDisplay } from './wordCache.js';
 import { DEV_USER_ID } from './config.js';
 
 function isLocalhost() {
@@ -38,43 +39,24 @@ function isValidUuid(uuid) {
 }
 
 async function addWord(word, definition, example, userId) {
-  const definitionFields = ['definition', 'meaning', 'description', 'content', 'def', 'explanation'];
-  const exampleFields = ['example', 'sentence', 'usage', 'note', 'remark'];
-  const basePayload = { word };
-  if (userId) basePayload.user_id = userId;
+  if (!word || !definition) throw new Error('word and definition are required');
+  const payload = { word, definition };
+  if (example) payload.example = example;
+  if (userId) payload.user_id = userId;
 
-  const tryInsert = async (payload) => {
-    return await supabase.from('words').insert([payload]);
-  };
+  const response = await fetch('/api/save-word', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(payload),
+  });
 
-  const payloadCandidates = [];
-  if (definition) {
-    for (const defField of definitionFields) {
-      if (example) {
-        for (const exampleField of exampleFields) {
-          payloadCandidates.push({ ...basePayload, [defField]: definition, [exampleField]: example });
-        }
-      }
-      payloadCandidates.push({ ...basePayload, [defField]: definition });
-    }
+  const result = await response.json();
+  if (!response.ok) {
+    throw new Error(result?.error || JSON.stringify(result));
   }
-  if (example) {
-    for (const exampleField of exampleFields) {
-      payloadCandidates.push({ ...basePayload, [exampleField]: example });
-    }
-  }
-  payloadCandidates.push({ ...basePayload });
-
-  let lastError = null;
-  for (const payload of payloadCandidates) {
-    const result = await tryInsert(payload);
-    if (!result.error) return result.data;
-    lastError = result.error;
-    if (!isMissingFieldError(result.error)) break;
-  }
-
-  if (lastError) throw lastError;
-  return [];
+  return result.data;
 }
 
 async function queryWords(q) {
@@ -256,7 +238,18 @@ document.addEventListener('DOMContentLoaded', () => {
   if (searchBtn) {
     searchBtn.addEventListener('click', async () => {
       const q = searchInput.value.trim();
+      if (!q) return;
       try {
+        // 优先尝试精确查单词（走三级缓存）。若抛出错误或未命中，再回退到模糊查询
+        try {
+          const exact = await getWordMeaning(q);
+          renderCards([{ word: exact.word, meaning: exact.meaning, example: '' }], searchResults);
+          return;
+        } catch (e) {
+          // 若精确查失败（例如未命中或并发锁），继续做模糊查询
+          console.warn('精确缓存查找未返回结果，回退模糊查询：', e.message || e);
+        }
+
         const list = await queryWords(q);
         renderCards(list, searchResults);
       } catch (err) {
@@ -265,5 +258,8 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }
+
+  // 展示缓存统计（若存在）
+  updateStatsDisplay();
 
 });

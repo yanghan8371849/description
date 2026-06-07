@@ -62,10 +62,16 @@
 <h3 class="text-2xl font-bold mb-4">🧠 学习卡片</h3>
 
 <div class="mb-6 flex gap-3 items-center">
-	<input id="search-input" type="text" placeholder="搜索单词" class="border rounded-lg px-4 py-2 w-72">
-	<button id="search-button" class="bg-blue-600 text-white px-4 py-2 rounded-lg">查询</button>
-	<div id="search-results" class="flex-1 grid grid-cols-1 md:grid-cols-2 gap-6"></div>
-</div>
+		<input id="search-input" type="text" placeholder="搜索单词" class="border rounded-lg px-4 py-2 w-72">
+		<button id="search-button" class="bg-blue-600 text-white px-4 py-2 rounded-lg">查询</button>
+		<div id="search-results" class="flex-1 grid grid-cols-1 md:grid-cols-2 gap-6"></div>
+		<div class="ml-4 flex items-center gap-4">
+			<div class="text-sm text-gray-700">Local Cache Hit: <span id="localCacheHit">0</span></div>
+			<div class="text-sm text-gray-700">Supabase Cache Hit: <span id="supabaseCacheHit">0</span></div>
+			<div class="text-sm text-gray-700">AI Requests: <span id="aiRequests">0</span></div>
+			<button id="clearLocalCacheBtn" class="bg-red-500 text-white px-3 py-2 rounded-lg">清空本地缓存</button>
+		</div>
+	</div>
 
 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
