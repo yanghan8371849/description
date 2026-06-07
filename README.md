@@ -198,26 +198,18 @@ https://your-project.vercel.app
 
 ## Home Page
 
-Insert screenshot here.
+<img width="1910" height="925" alt="c3bcc648b3fcbd44bdd3f82f594f238c" src="https://github.com/user-attachments/assets/12b245c4-caac-422d-8c1c-4038512b99c5" />
+
 
 ## Word Input Function
 
-Insert screenshot here.
+<img width="1910" height="925" alt="3401ce227b1a88b3e696d2ff792789e0" src="https://github.com/user-attachments/assets/39a0c27f-2831-45a2-aeb8-ad4e1d817325" />
+
 
 ## AI Meaning Generation
 
-Insert screenshot here.
-
-## Vocabulary History
-
-Insert screenshot here.
-
-## Mobile Responsive View
-
-Insert screenshot here.
-
+<img width="1910" height="925" alt="3401ce227b1a88b3e696d2ff792789e0" src="https://github.com/user-attachments/assets/86c260fa-7fb5-4b67-8f74-c148ed4c9ac2" />
 ---
-
 # Project Highlights
 
 * AI-powered vocabulary explanation
@@ -263,8 +255,6 @@ Developed using:
 * Supabase
 * Vercel
 * Visual Studio Code
-<img width="1920" height="1080" alt="Desktop Screenshot 2026 06 06 - 15 05 33 98" src="https://github.com/user-attachments/assets/78225727-369a-487a-9bba-aff70ebaeabd" />
-<img width="1920" height="1080" alt="Desktop Screenshot 2026 06 06 - 15 03 03 48" src="https://github.com/user-attachments/assets/e7ee3ec4-6bdb-4bd4-81cc-3106409b0252" />
-<img width="1920" height="1080" alt="Desktop Screenshot 2026 06 06 - 17 10 07 67" src="https://github.com/user-attachments/assets/dbef3f5c-37b9-42a8-a72b-74259fcd837c" />
+
 
 
